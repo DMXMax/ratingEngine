@@ -17,5 +17,5 @@ func main() {
 }
 
 func handle(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Hello From the Ratings Engine!")
+	fmt.Fprintln(w, "Hello From the Ratings Engine!", r.Method,r.Header)
 }
