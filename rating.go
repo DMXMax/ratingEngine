@@ -7,7 +7,8 @@ package main
 import (
 	"fmt"
 	"net/http"
-
+  "io/ioutil"
+//  "encoding/json"
 	"google.golang.org/appengine"
 )
 
@@ -26,7 +27,13 @@ func fail400(w http.ResponseWriter){
 
 func handle(w http.ResponseWriter, r *http.Request) {
   if r.Header.Get("Content-Type") == "application/json" && r.Method == "POST"{
-	  fmt.Fprintln(w, "Hello From the Ratings Engine!", r.Method,r.Header)
+    body, err := ioutil.ReadAll(r.Body)
+    if err==nil{
+      fmt.Println(err)
+      fail400(w)
+    }
+
+	  fmt.Fprintln(w, "Hello From the Ratings Engine!",body)
   }else{
     fail400(w)
   }
