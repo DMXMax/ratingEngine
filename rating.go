@@ -9,6 +9,7 @@ import (
 	"net/http"
   "io/ioutil"
   "encoding/json"
+  "strconv"
 	"google.golang.org/appengine"
 )
 
@@ -33,6 +34,8 @@ func processData(w http.ResponseWriter, body []byte){
     if err != nil{
       w.Write([]byte("Success!"))
       w.Write([]byte(a["Safety"]))
+      w.Write([]byte("Length:"))
+      w.Write([]byte(strconv.Itoa((len(a)))))
       for key, value := range a {
           w.Write([]byte(key))
           w.Write([]byte(value))
