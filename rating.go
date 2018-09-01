@@ -31,7 +31,7 @@ func processData(w http.ResponseWriter, body []byte){
     w.Write([]byte("Body is Valid"))
     a := make(map[string]string)
     err := json.Unmarshal(body, &a)
-    if err != nil{
+    if err == nil{
       w.Write([]byte("Success!"))
       w.Write([]byte(a["Safety"]))
       w.Write([]byte("Length:"))
