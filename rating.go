@@ -29,12 +29,11 @@ func handle(w http.ResponseWriter, r *http.Request) {
   if r.Header.Get("Content-Type") == "application/json" && r.Method == "POST"{
     body, err := ioutil.ReadAll(r.Body)
     if err==nil{
-      fmt.Println(err)
+    
+
+	    fmt.Fprintln(w, "Hello From the Ratings Engine!",body)
+    }else{
       fail400(w)
     }
-
-	  fmt.Fprintln(w, "Hello From the Ratings Engine!",body)
-  }else{
-    fail400(w)
   }
 }
