@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"net/http"
   "io/ioutil"
-//  "encoding/json"
+  "encoding/json"
 	"google.golang.org/appengine"
 )
 
@@ -25,13 +25,24 @@ func fail400(w http.ResponseWriter){
 
 }
 
+func processData(w http.ResponseWriter, body []byte){
+  if json.Valid(body){
+    w.Write([]byte("Body is Valid"))
+  }else{
+    w.Write([]byte("Invalid Body"))
+  }
+
+}
+
+
 func handle(w http.ResponseWriter, r *http.Request) {
   if r.Header.Get("Content-Type") == "application/json" && r.Method == "POST"{
     body, err := ioutil.ReadAll(r.Body)
     if err==nil{
     
 
-	    fmt.Fprintln(w, "Hello From the Ratings Engine!",string(body))
+      fmt.Fprintln(w, "Basic Tests Passed. Data: ",string(body))
+      processData(w, body)
     }else{
       fail400(w)
     }
