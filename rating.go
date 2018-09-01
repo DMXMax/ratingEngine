@@ -31,7 +31,7 @@ func handle(w http.ResponseWriter, r *http.Request) {
     if err==nil{
     
 
-	    fmt.Fprintln(w, "Hello From the Ratings Engine!",body)
+	    fmt.Fprintln(w, "Hello From the Ratings Engine!",string(body))
     }else{
       fail400(w)
     }
