@@ -33,6 +33,10 @@ func processData(w http.ResponseWriter, body []byte){
     if err != nil{
       w.Write([]byte("Success!"))
       w.Write([]byte(a["Safety"]))
+      for key, value := range a {
+          w.Write([]byte(key))
+          w.Write([]byte(value))
+          }
     }else{
     }
   }else{
