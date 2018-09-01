@@ -41,6 +41,7 @@ func processData(w http.ResponseWriter, body []byte){
           w.Write([]byte(value))
           }
     }else{
+      w.Write([]byte(err.Error()))
     }
   }else{
     w.Write([]byte("Invalid Body"))
