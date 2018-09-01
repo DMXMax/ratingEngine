@@ -16,12 +16,18 @@ func main() {
 	appengine.Main()
 }
 
+func fail400(w http.ResponseWriter){
+
+
+  w.WriteHeader(http.StatusBadRequest)
+  w.Write([]byte("400 Nope."))
+
+}
+
 func handle(w http.ResponseWriter, r *http.Request) {
   if r.Header.Get("Content-Type") == "application/json" && r.Method == "POST"{
 	  fmt.Fprintln(w, "Hello From the Ratings Engine!", r.Method,r.Header)
   }else{
-    w.WriteHeader(http.StatusBadRequest)
-    w.Write([]byte("400 Nope."))
-    w.Write([]byte(r.Header.Get("Content-Type")))
+    fail400(w)
   }
 }
