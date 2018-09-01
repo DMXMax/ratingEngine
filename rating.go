@@ -33,7 +33,7 @@ func processData(w http.ResponseWriter, body []byte){
     if err != nil{
       w.Write([]byte("Success!"))
     }else{
-      w.Write([]byte("Boo!"))
+      w.Write([]byte(a["Safety"]))
     }
   }else{
     w.Write([]byte("Invalid Body"))
