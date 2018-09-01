@@ -17,5 +17,11 @@ func main() {
 }
 
 func handle(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Hello From the Ratings Engine!", r.Method,r.Header)
+  if r.Header["Content-Type"][0] == "application/json"{
+	  fmt.Fprintln(w, "Hello From the Ratings Engine!", r.Method,r.Header)
+  }else{
+    w.WriteHeader(http.StatusBadRequest)
+    w.Write([]byte("400 Nope."))
+    w.Write([]byte(r.Header["Content-Type"][0]))
+  }
 }
