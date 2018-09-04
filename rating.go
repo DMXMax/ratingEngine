@@ -33,12 +33,12 @@ func processData(w http.ResponseWriter, body []byte){
     err := json.Unmarshal(body, &a)
     if err == nil{
       w.Write([]byte("Success!"))
-      w.Write([]byte(a["Safety"]))
+      w.Write([]byte(strconv.Itoa(a["Safety"])))
       w.Write([]byte("Length:"))
       w.Write([]byte(strconv.Itoa((len(a)))))
       for key, value := range a {
           w.Write([]byte(key))
-          w.Write([]byte(value))
+          w.Write([]byte(strconv.Itoa(value)))
           }
     }else{
       w.Write([]byte(err.Error()))
