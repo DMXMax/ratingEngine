@@ -29,7 +29,7 @@ func fail400(w http.ResponseWriter){
 func processData(w http.ResponseWriter, body []byte){
   if json.Valid(body){
     w.Write([]byte("Body is Valid"))
-    a := make(map[string]string)
+    a := make(map[string]int)
     err := json.Unmarshal(body, &a)
     if err == nil{
       w.Write([]byte("Success!"))
