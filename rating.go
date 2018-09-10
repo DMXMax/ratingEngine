@@ -60,11 +60,11 @@ func processData(w http.ResponseWriter, body []byte){
     if err == nil{
       fmt.Fprintln(w,"Success!");
       fmt.Fprintln(w, "Length:", len(a))
-      for key, value := range a {
+      nm := cleanMap(&a, []string{"Customer", "Financial", "Reliability", "Safety"});
+      for key, value := range nm {
           fmt.Fprint(w,key, ": ",strconv.Itoa(value), "\r\n")
           }
 
-      nm := cleanMap(&a, []string{"Customer", "Financial", "Reliability", "Safety"});
       b,_ := json.Marshal(nm)
       fmt.Fprint(w,b)
     }else{
