@@ -11,6 +11,8 @@ import (
   "encoding/json"
   "strconv"
 	"google.golang.org/appengine"
+  "reflect"
+  "bytes"
 )
 
 func main() {
@@ -37,7 +39,10 @@ func writeData(i interface{}) string {
     case string:
       res = k;
     default:
-      res = "I don't know how to convert this"
+      var buffer bytes.Buffer
+      buffer.WriteString("I Don't know how to convert ")
+      buffer.WriteString(reflect.TypeOf(k).Name())
+      res = buffer.String()
       
   }
 
