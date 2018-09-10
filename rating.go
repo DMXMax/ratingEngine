@@ -60,6 +60,8 @@ type ResultData struct{
 func calcResult(mp *map[string]int) ResultData {
   var m map[string]int = *mp
   var res = ResultData{}
+  scoreMap := make(map[string]float64)
+
   res.Source = m
 
   average :=  float64(m["Customer"]+
@@ -67,7 +69,8 @@ func calcResult(mp *map[string]int) ResultData {
               m["Reliability"]+ 
               m["Safety"])/float64(4.0)
   
-  res.Scores["Average"]= average
+  scoreMap["Average"]=average
+  res.Scores = scoreMap
 
   return res
 }
