@@ -28,6 +28,10 @@ func fail400(w http.ResponseWriter){
 func writeData(i interface{}) string { 
   var res string;
   switch k:= i.(type){
+  case int32:
+    res = strconv.Itoa(int(k))
+  case int64:
+    res = strconv.Itoa(int(k))
     case int: 
       res = strconv.Itoa(k)
     case string:
