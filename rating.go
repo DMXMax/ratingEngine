@@ -66,7 +66,7 @@ func processData(w http.ResponseWriter, body []byte){
           }
 
       b,_ := json.Marshal(nm)
-      fmt.Fprint(w,b)
+      w.Write(b)
     }else{
       w.Write([]byte(err.Error()))
     }
