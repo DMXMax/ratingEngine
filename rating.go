@@ -52,6 +52,26 @@ func fail400(w http.ResponseWriter){
 
 }
 
+type ResultData struct{
+  Source map[string] int
+  Scores map[string] float64
+}
+
+func calcResult(mp *map[string]int) ResultData {
+  var m map[string]int = *mp
+  var res = ResultData{}
+  res.Source = m
+
+  average :=  float64(m["Customer"]+
+              m["Financial"]+
+              m["Reliability"]+ 
+              m["Safety"])/float64(4.0)
+  
+  res.Scores["Average"]= average
+
+  return res
+}
+
 func processData(w http.ResponseWriter, body []byte){
   if json.Valid(body){
     fmt.Fprintln(w, "Body is Valid")
@@ -64,8 +84,8 @@ func processData(w http.ResponseWriter, body []byte){
       for key, value := range nm {
           fmt.Fprint(w,key, ": ",strconv.Itoa(value), "\r\n")
           }
-
-      b,_ := json.Marshal(nm)
+      res := calcResult(&nm)
+      b,_ := json.Marshal(res)
       w.Write(b)
     }else{
       w.Write([]byte(err.Error()))
