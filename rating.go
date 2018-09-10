@@ -11,7 +11,6 @@ import (
   "encoding/json"
   "strconv"
 	"google.golang.org/appengine"
-  "bytes"
 )
 
 func main() {
@@ -34,15 +33,9 @@ func processData(w http.ResponseWriter, body []byte){
     err := json.Unmarshal(body, &a)
     if err == nil{
       fmt.Fprintln(w,"Success!");
-      fmt.Fprintln(w, "Length: %v", len(a))
-      var buffer bytes.Buffer
+      fmt.Fprintln(w, "Length:", len(a))
       for key, value := range a {
-          buffer.WriteString(key)
-          buffer.WriteString(": ")
-          buffer.WriteString(strconv.Itoa(value))
-          buffer.WriteString("\r\n")
-          _,_ =buffer.WriteTo(w)
-          buffer.Reset()
+          fmt.Fprint(w,key, ": ",strconv.Itoa(value), "\r\n")
           }
     }else{
       w.Write([]byte(err.Error()))
