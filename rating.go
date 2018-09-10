@@ -18,6 +18,32 @@ func main() {
 	appengine.Main()
 }
 
+func cleanMap(m *map[string]int,s []string) map[string]int {
+  newMap := make(map[string]int)
+  var fadd bool
+
+  for key, value := range *m{
+    fadd = false
+    for val := range s{
+      if key == s[val]{
+        fadd = true
+        break
+      }
+    // Customer, Financial, Reliability, Safety
+      if key < s[val] {
+        break
+      }
+
+    }
+    if fadd{
+      newMap[key]=value
+    }
+  }
+
+  return newMap
+}
+  
+
 func fail400(w http.ResponseWriter){
 
 
@@ -37,6 +63,10 @@ func processData(w http.ResponseWriter, body []byte){
       for key, value := range a {
           fmt.Fprint(w,key, ": ",strconv.Itoa(value), "\r\n")
           }
+
+      nm := cleanMap(&a, []string{"Customer", "Financial", "Reliability", "Safety"});
+      b,_ := json.Marshal(nm)
+      fmt.Fprint(w,b)
     }else{
       w.Write([]byte(err.Error()))
     }
