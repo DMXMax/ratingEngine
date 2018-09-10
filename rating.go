@@ -25,20 +25,34 @@ func fail400(w http.ResponseWriter){
   w.Write([]byte("400 Nope."))
 
 }
+func writeData(i interface{}) string { 
+  var res string;
+  switch k:= i.(type){
+    case int: 
+      res = strconv.Itoa(k)
+    case string:
+      res = k;
+    default:
+      res = "I don't know how to convert this"
+      
+  }
+
+  return res;
+
+}
 
 func processData(w http.ResponseWriter, body []byte){
   if json.Valid(body){
     w.Write([]byte("Body is Valid"))
-    a := make(map[string]int)
+    a := make(map[string]interface{})
     err := json.Unmarshal(body, &a)
     if err == nil{
+
       w.Write([]byte("Success!"))
-      w.Write([]byte(strconv.Itoa(a["Safety"])))
       w.Write([]byte("Length:"))
-      w.Write([]byte(strconv.Itoa((len(a)))))
       for key, value := range a {
           w.Write([]byte(key))
-          w.Write([]byte(strconv.Itoa(value)))
+          w.Write([]byte(writeData(value)))
           }
     }else{
       w.Write([]byte(err.Error()))
