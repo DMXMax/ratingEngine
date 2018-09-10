@@ -11,7 +11,6 @@ import (
   "encoding/json"
   "strconv"
 	"google.golang.org/appengine"
-  "reflect"
   "bytes"
 )
 
@@ -27,43 +26,25 @@ func fail400(w http.ResponseWriter){
   w.Write([]byte("400 Nope."))
 
 }
-func writeData(i interface{}) string { 
-  var res string;
-  switch k:= i.(type){
-  case float64:
-    res = strconv.Itoa(int(k))
-  case int32:
-    res = strconv.Itoa(int(k))
-  case int64:
-    res = strconv.Itoa(int(k))
-    case int: 
-      res = strconv.Itoa(k)
-    case string:
-      res = k;
-    default:
-      var buffer bytes.Buffer
-      buffer.WriteString("I Don't know how to convert ")
-      buffer.WriteString(reflect.TypeOf(k).Name())
-      res = buffer.String()
-      
-  }
 
-  return res;
-
-}
 
 func processData(w http.ResponseWriter, body []byte){
   if json.Valid(body){
     w.Write([]byte("Body is Valid"))
-    a := make(map[string]interface{})
+    a := make(map[string]int)
     err := json.Unmarshal(body, &a)
     if err == nil{
 
       w.Write([]byte("Success!"))
       w.Write([]byte("Length:"))
+      var buffer bytes.Buffer
       for key, value := range a {
-          w.Write([]byte(key))
-          w.Write([]byte(writeData(value)))
+          buffer.WriteString(key)
+          buffer.WriteString(": ")
+          buffer.WriteString(strconv.Itoa(value))
+          buffer.WriteString("\r\n")
+          _,_ =buffer.WriteTo(w)
+          buffer.Reset()
           }
     }else{
       w.Write([]byte(err.Error()))
